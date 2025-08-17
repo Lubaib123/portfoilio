@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammed Lubaib - Flutter Developer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Styles and Animations -->
+    <style>
+        /* Define a custom font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* CSS Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* More dynamic blob animation for hero section */
+        @keyframes blob-hero-1 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { transform: translate(20px, -30px) scale(1.05) rotate(5deg); border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+            50% { transform: translate(-10px, 15px) scale(0.98) rotate(-5deg); border-radius: 40% 60% 70% 30% / 70% 40% 60% 30%; }
+            75% { transform: translate(15px, 0px) scale(1.03) rotate(3deg); border-radius: 65% 35% 45% 55% / 55% 45% 55% 45%; }
+        }
+        @keyframes blob-hero-2 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 70% 40% 60% 30%; }
+            25% { transform: translate(-25px, 10px) scale(0.97) rotate(-3deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { transform: translate(5px, -20px) scale(1.02) rotate(4deg); border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+            75% { transform: translate(0px, 25px) scale(0.99) rotate(-2deg); border-radius: 45% 55% 55% 45% / 50% 50% 50% 50%; }
+        }
+        @keyframes blob-hero-3 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+            25% { transform: translate(10px, 20px) scale(1.01) rotate(2deg); border-radius: 40% 60% 70% 30% / 70% 40% 60% 30%; }
+            50% { transform: translate(-15px, -10px) scale(0.98) rotate(-4deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            75% { transform: translate(5px, 0px) scale(1.03) rotate(1deg); border-radius: 65% 35% 45% 55% / 55% 45% 55% 45%; }
+        }
+
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .animate-fade-in-up { animation: fadeIn 0.8s ease-out forwards; }
+        .animate-fade-in-down { animation: fadeInDown 0.6s ease-out forwards; }
+        .animation-delay-100 { animation-delay: 0.1s; }
+        .animation-delay-200 { animation-delay: 0.2s; }
+        .animation-delay-300 { animation-delay: 0.3s; }
+        .animation-delay-400 { animation-delay: 0.4s; }
+        .animation-delay-500 { animation-delay: 0.5s; }
+        /* Specific delays for blob animations */
+        .animate-blob-hero-1 { animation: blob-hero-1 10s infinite alternate; }
+        .animate-blob-hero-2 { animation: blob-hero-2 12s infinite alternate; }
+        .animate-blob-hero-3 { animation: blob-hero-3 11s infinite alternate; }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 text-gray-900 font-inter antialiased overflow-x-hidden">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white bg-opacity-95 z-50 shadow-sm p-4 md:px-12 flex justify-between items-center border-b border-gray-100 backdrop-blur-md">
+        <div class="flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-indigo-700 animate-fade-in-down tracking-wide">
+                MUHAMMED LUBAIB
+            </div>
+            <button
+                id="nav-toggle"
+                class="md:hidden text-gray-800 focus:outline-none p-2 rounded-md hover:bg-gray-100 transition-colors"
+                aria-label="Toggle navigation menu"
+            >
+                <!-- Hamburger Icon -->
+                <svg id="hamburger-icon" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <!-- Close Icon -->
+                <svg id="close-icon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <ul id="nav-menu" class="md:flex space-x-8 mt-4 md:mt-0 hidden md:block text-center">
+            <li>
+                <button data-section="home" class="nav-link text-lg transition duration-300 ease-in-out transform hover:scale-105 py-2 px-3 rounded-md text-indigo-700 font-semibold bg-indigo-50 shadow-inner">Home</button>
+            </li>
+            <li>
+                <button data-section="skills" class="nav-link text-lg transition duration-300 ease-in-out transform hover:scale-105 py-2 px-3 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Skills</button>
+            </li>
+            <li>
+                <button data-section="experience" class="nav-link text-lg transition duration-300 ease-in-out transform hover:scale-105 py-2 px-3 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Experience</button>
+            </li>
+            <li>
+                <button data-section="projects" class="nav-link text-lg transition duration-300 ease-in-out transform hover:scale-105 py-2 px-3 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Projects</button>
+            </li>
+            <li>
+                <button data-section="contact" class="nav-link text-lg transition duration-300 ease-in-out transform hover:scale-105 py-2 px-3 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-50">Contact</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+        id="home"
+        class="relative h-screen flex items-center justify-center p-6 lg:p-12 overflow-hidden"
+        style="background: linear-gradient(160deg, #E8EEF8 0%, #DCE3EE 100%);"
+    >
+        <div class="absolute inset-0 z-0 opacity-40">
+            <!-- Custom geometric patterns (blobs with more pronounced morphing) -->
+            <div class="absolute top-1/4 left-1/4 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob-hero-1"></div>
+            <div class="absolute bottom-1/3 right-1/4 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob-hero-2 animation-delay-2000"></div>
+            <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob-hero-3 animation-delay-4000"></div>
+        </div>
+        <div class="relative z-10 flex flex-col items-center justify-center bg-white p-8 lg:p-16 rounded-[40px] shadow-2xl transition-shadow duration-300 max-w-4xl w-full mx-auto animate-fade-in-up transform translate-y-0 duration-900 ease-out transition-all border border-gray-100 text-center">
+            <div class="mb-8">
+                <p class="text-xl text-indigo-600 font-semibold mb-4 animate-fade-in-up delay-100">Hello, I'm</p>
+                <h1 class="text-6xl lg:text-7xl font-extrabold mb-4 text-gray-900 leading-tight animate-fade-in-up delay-200">
+                    MUHAMMED LUBAIB
+                </h1>
+                <h2 class="text-3xl lg:text-4xl text-blue-700 font-bold mb-6 animate-fade-in-up delay-300">
+                    Flutter Developer
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed max-w-prose mx-auto mb-8 animate-fade-in-up delay-400">
+                    Experienced Flutter Developer with a strong history of delivering cross-platform (iOS, Android, web) applications throughout the full development lifecycle. Proven ability to lead backend and UI/UX teams to create user-focused solutions. Passionate about building innovative, high-quality apps and seeking challenging projects.
+                </p>
+                <div class="flex justify-center space-x-4 animate-fade-in-up delay-500">
+                    <a
+                        href="#contact"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
+                    >
+                        Get in Touch
+                    </a>
+                    <a
+                        href="https://linkedin.com/in/muhammed-lubaib-tp"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center justify-center border border-gray-300 text-gray-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
+                        aria-label="LinkedIn Profile"
+                    >
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" />
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-8 bg-gradient-to-br from-white via-blue-50 to-indigo-50 relative overflow-hidden">
+        <h2 class="text-5xl font-extrabold text-center text-indigo-800 mb-16 animate-fade-in-up drop-shadow-lg relative z-10">
+            My Expertise
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-10">
+            <!-- Skill 1 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-infinity"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4Z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Flutter & Dart Development</h3>
+                <p class="text-gray-600 text-base">Building beautiful and performant cross-platform applications for iOS, Android, and Web using Flutter and Dart.</p>
+            </div>
+            <!-- Skill 2 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">State Management & Architecture</h3>
+                <p class="text-gray-600 text-base">Proficient in various state management solutions (Provider, Riverpod, BLOC, GetX) and architectural patterns (MVVM, Clean Architecture).</p>
+            </div>
+            <!-- Skill 3 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/><path d="M3 19A9 3 0 0 0 21 19"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Backend Integration & Firebase</h3>
+                <p class="text-gray-600 text-base">Strong experience with Firebase services (Auth, Firestore, Storage, Cloud Messaging) and integrating RESTful/GraphQL APIs.</p>
+            </div>
+            <!-- Skill 4 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.4s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paint-brush"><path d="M9 18v3c0 .6.4 1 1 1h4c.6 0 1-.4 1-1v-3"/><path d="M7 21v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/><path d="M21.7 6.3a1 1 0 0 0 0-1.4L18.7 2.3a1 1 0 0 0-1.4 0V2.3z"/><path d="M17 17v-8h-2z"/><path d="M14 17h-2"/><path d="M3 14h2"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">UI/UX Implementation</h3>
+                <p class="text-gray-600 text-base">Dedicated to developing intuitive, visually appealing user interfaces with a focus on great user experience and responsive design.</p>
+            </div>
+            <!-- Skill 5 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.5s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-branch-plus"><path d="M6 3v12"/><path d="M18 9V3"/><path d="M6 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M18 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M6 12h.01"/><path d="M18 9h.01"/><path d="M15 6h6"/><path d="M18 3v6"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Version Control & Deployment</h3>
+                <p class="text-gray-600 text-base">Proficient with Git/GitHub/GitLab for collaborative development and experienced in deploying applications to Play Store and App Store.</p>
+            </div>
+            <!-- Skill 6 -->
+            <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: 0.6s;">
+                <div class="text-indigo-600 mb-4 transform transition-transform duration-300 group-hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Testing & Quality Assurance</h3>
+                <p class="text-gray-600 text-base">Practices Unit Testing and Widget Testing to ensure robust and bug-free application delivery.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Section -->
+    <section id="experience" class="py-24 px-8 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+        <h2 class="text-5xl font-extrabold text-center text-indigo-800 mb-16 animate-fade-in-up drop-shadow-lg relative z-10">
+            Professional Journey
+        </h2>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <!-- Vertical timeline line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-indigo-200 to-blue-200 hidden md:block"></div>
+
+            <!-- Job 1 -->
+            <div class="flex flex-col md:flex-row items-center md:items-start w-full my-8 animate-fade-in-up" style="animation-delay: 0.15s;">
+                <div class="md:w-1/2 p-4 md:pr-10 md:text-right">
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-2">FREELANCE FLUTTER DEVELOPER</h3>
+                        <p class="text-xl text-gray-800 mb-1">Self-Employed</p>
+                        <p class="text-md text-gray-500 mb-3">November 2024 - Present | Remote</p>
+                        <p class="text-lg text-gray-700 leading-relaxed">Successfully delivered various cross-platform Flutter applications for diverse clients, managing full development lifecycle from concept to deployment. Focused on clean code, responsive UI, and robust backend integrations.</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 hidden md:flex justify-center items-center">
+                    <div class="w-4 h-4 rounded-full bg-indigo-500 border-2 border-white shadow-md"></div>
+                </div>
+            </div>
+            <!-- Job 2 -->
+            <div class="flex flex-col md:flex-row items-center md:items-start w-full my-8 animate-fade-in-up" style="animation-delay: 0.30s;">
+                <div class="md:w-1/2 p-4 md:pl-10 md:text-left">
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-2">FLUTTER DEVELOPER</h3>
+                        <p class="text-xl text-gray-800 mb-1">KEEPA SHOPKEEPING</p>
+                        <p class="text-md text-gray-500 mb-3">April 2024 - October 2024 | Germany (remote)</p>
+                        <p class="text-lg text-gray-700 leading-relaxed">Developed a comprehensive business solution as a key Flutter Developer for this inventory management startup.</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 hidden md:flex justify-center items-center">
+                    <div class="w-4 h-4 rounded-full bg-indigo-500 border-2 border-white shadow-md"></div>
+                </div>
+            </div>
+            <!-- Job 3 -->
+            <div class="flex flex-col md:flex-row items-center md:items-start w-full my-8 animate-fade-in-up" style="animation-delay: 0.45s;">
+                <div class="md:w-1/2 p-4 md:pr-10 md:text-right">
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-2">ASSOCIATE SOFTWARE ENGINEER</h3>
+                        <p class="text-xl text-gray-800 mb-1">Lilac Info Tech</p>
+                        <p class="text-md text-gray-500 mb-3">December 2022 - April 2024 | Calicut, India - (Onsite)</p>
+                        <p class="text-lg text-gray-700 leading-relaxed">Led teams and built cross-platform Flutter apps, collaborating with backend and UI/UX teams, providing API documentation. Proficient in Dart and Firebase.</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 hidden md:flex justify-center items-center">
+                    <div class="w-4 h-4 rounded-full bg-indigo-500 border-2 border-white shadow-md"></div>
+                </div>
+            </div>
+            <!-- Job 4 -->
+            <div class="flex flex-col md:flex-row items-center md:items-start w-full my-8 animate-fade-in-up" style="animation-delay: 0.60s;">
+                <div class="md:w-1/2 p-4 md:pl-10 md:text-left">
+                    <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-2">FLUTTER DEVELOPER INTERN</h3>
+                        <p class="text-xl text-gray-800 mb-1">EDAPT</p>
+                        <p class="text-md text-gray-500 mb-3">July 2022 - December 2022 | Malappuram, India - (Onsite)</p>
+                        <p class="text-lg text-gray-700 leading-relaxed">Gained practical Flutter experience, developing small apps and contributing to team projects, solidifying Dart and Firebase skills.</p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 hidden md:flex justify-center items-center">
+                    <div class="w-4 h-4 rounded-full bg-indigo-500 border-2 border-white shadow-md"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-8 bg-gradient-to-br from-white via-blue-50 to-indigo-50 relative overflow-hidden">
+        <h2 class="text-5xl font-extrabold text-center text-indigo-800 mb-16 animate-fade-in-up drop-shadow-lg relative z-10">
+            Featured Projects
+        </h2>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <!-- Featured Project - Larger, more visual -->
+            <!-- Featured Project - Larger, more visual -->
+<div class="mb-16 bg-gradient-to-br from-blue-100 to-indigo-100 p-8 rounded-[35px] shadow-xl border border-gray-100 animate-fade-in-up">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+            <img
+                src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e2/96/0f/e2960f49-2758-0a84-17e2-72ec7efc75e7/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/460x0w.webp"
+                alt="Eva Dining Project Visual"
+                class="w-full h-auto object-cover rounded-xl shadow-lg border border-white"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/7B68EE/FFFFFF?text=Error';"
+            />
+        </div>
+        <div class="text-center md:text-left p-4">
+            <h3 class="text-4xl font-bold text-indigo-700 mb-4">Eva Dining (Eva Din)</h3>
+            <p class="text-xl text-gray-800 leading-relaxed mb-6">
+                Project Manager and Team Lead for a catering management solution covering event, staff, inventory, finance, and customer management. 
+                Successfully led the team to design and implement a scalable system available on iOS, Android, and Web.
+            </p>
+            <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6">
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Flutter</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Firebase</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">iOS</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Android</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Web</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Event Management</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Inventory</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Finance</span>
+                <span class="bg-indigo-100 text-indigo-700 text-base px-4 py-1.5 rounded-full font-semibold">Customer Management</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <h3 class="text-4xl font-extrabold text-center text-gray-800 mt-20 mb-12 animate-fade-in-up">
+                Other Notable Projects
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                 <a
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+        style="animation-delay: 0.1s;"
+    >
+        <h3 class="text-2xl font-bold text-indigo-700 mb-3">Keepa Shopkeeping</h3>
+        <p class="text-gray-700 mb-4 leading-relaxed text-base">
+            Developed a comprehensive business solution as a key Flutter Developer for this inventory management startup. This included building robust inventory, staff, stock, and accounting features that significantly streamlined operations.
+        </p>
+        <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Flutter</span>
+            <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+            <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+        </div>
+    </a>
+                <!-- Project 1 -->
+                <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.1s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">BROKEES</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Led development of a social media platform for realtors with features like property listings, chat, and video uploads.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Flutter</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+                    </div>
+                </a>
+                <!-- Project 2 -->
+                <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.2s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">Skymark - Study Abroad App</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Key developer in a student empowerment platform with course catalogs, learning plans, and community forums.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Flutter</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">UI/UX</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">API Testing</span>
+                    </div>
+                </a>
+                <!-- Project 3 -->
+                <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.3s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">GSL - Language Learning App - IELTS</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Developed features for English language improvement, including lessons, exercises, chat, progress tracking.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Lessons</span>
+                    </div>
+                </a>
+                <!-- Project 4 -->
+                <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.4s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">GSL - Accommodation App</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Developed an app for students to find housing abroad with property listings, search filters, and secure payments.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Payments</span>
+                    </div>
+                </a>
+                <!-- Project 5 -->
+                <!-- <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.5s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">Cero Bizz</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Led development of a comprehensive ERP solution with product management, inventory, accounting, and billing.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">ERP</span>
+                    </div>
+                </a> -->
+                <!-- Project 6 -->
+                <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                    style="animation-delay: 0.6s;"
+                >
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">EDAPT Learning App</h3>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-base">Developed UI/UX, Firebase integration, authentication, and API integration for a learning app with video streaming.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">iOS</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Android</span>
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">Firebase</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-8 bg-gradient-to-br from-gray-100 via-white to-blue-50 text-center relative overflow-hidden">
+        <h2 class="text-5xl font-extrabold text-indigo-800 mb-16 animate-fade-in-up drop-shadow-lg relative z-10">
+            Let's Connect!
+        </h2>
+        <div class="max-w-xl mx-auto bg-gradient-to-br from-white to-gray-50 p-10 rounded-[30px] shadow-xl hover:shadow-2xl transition-shadow duration-300 animate-fade-in-up border border-gray-100 relative z-10">
+            <p class="text-lg text-gray-700 mb-8">
+                I'm always open to new opportunities and collaborations. Feel free to reach out!
+            </p>
+            <div class="space-y-5">
+                <a
+                    href="mailto:lubaibflutter@gmail.com"
+                    class="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 group"
+                >
+                    <svg
+                        class="w-7 h-7 mr-3 text-indigo-100 group-hover:text-white transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13h9a2 2 0 002-2V7a2 2 0 00-2-2H3a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        ></path>
+                    </svg>
+                    lubaibflutter@gmail.com
+                </a>
+                <a
+                    href="tel:+971567489772"
+                    class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 group"
+                >
+                    <svg
+                        class="w-7 h-7 mr-3 text-blue-100 group-hover:text-white transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-2.172a12.083 12.083 0 01-7.078-2.071c-3.181-2.454-5.275-5.908-5.516-9.585A12.083 12.083 0 013 5z"
+                        ></path>
+                    </svg>
+                    +971 56 748 9772
+                </a>
+                <a
+                    href="https://linkedin.com/in/muhammed-lubaib-tp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-center border border-gray-300 text-gray-700 hover:bg-gray-100 font-bold py-4 px-6 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 group"
+                    aria-label="LinkedIn Profile"
+                >
+                    <svg class="w-7 h-7 mr-3 text-gray-500 group-hover:text-gray-700 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" />
+                    </svg>
+                    LinkedIn Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-900 to-black p-8 text-center text-gray-300 text-sm border-t border-gray-800 shadow-inner">
+        <p>&copy; <span id="current-year"></span> Muhammed Lubaib. All rights reserved.</p>
+        <p class="mt-2">Designed with <span class="text-red-400">&hearts;</span> and built with HTML, JavaScript, and Tailwind CSS</p>
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            const currentYearSpan = document.getElementById('current-year');
+
+            // Set current year in footer
+            currentYearSpan.textContent = new Date().getFullYear();
+
+            // Toggle mobile navigation menu
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+                hamburgerIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+            });
+
+            // Smooth scroll and active link highlighting
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default anchor link behavior
+                    const sectionId = link.dataset.section;
+                    const targetSection = document.getElementById(sectionId);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+
+                        // Update active class immediately on click
+                        navLinks.forEach(navLink => {
+                            navLink.classList.remove('text-indigo-700', 'font-semibold', 'bg-indigo-50', 'shadow-inner');
+                            navLink.classList.add('text-gray-700', 'hover:text-indigo-600', 'hover:bg-gray-50');
+                        });
+                        link.classList.add('text-indigo-700', 'font-semibold', 'bg-indigo-50', 'shadow-inner');
+                        link.classList.remove('text-gray-700', 'hover:text-indigo-600', 'hover:bg-gray-50');
+
+                        // Close mobile menu after click
+                        if (window.innerWidth < 768) { // md breakpoint for Tailwind is 768px
+                            navMenu.classList.add('hidden');
+                            hamburgerIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            // Scroll spy for active navigation link
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            if (link.dataset.section === entry.target.id) {
+                                link.classList.remove('text-gray-700', 'hover:text-indigo-600', 'hover:bg-gray-50');
+                                link.classList.add('text-indigo-700', 'font-semibold', 'bg-indigo-50', 'shadow-inner');
+                            } else {
+                                link.classList.remove('text-indigo-700', 'font-semibold', 'bg-indigo-50', 'shadow-inner');
+                                link.classList.add('text-gray-700', 'hover:text-indigo-600', 'hover:bg-gray-50');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.3 }); // Adjust threshold as needed for when a section becomes "active"
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
